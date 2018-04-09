@@ -118,7 +118,7 @@ app.get('/stat', function (req, res) {
 	  col.find({}).toArray(function(err, result) {
 		if (err) throw err;
 		str="<table border='1' cellpadding='7' style='border-collapse: collapse;'>";
-		str+="<caption style='color:blue;'>Содержание коллекции 'counts' базы данных Mongo 'db_nodejs_ex'</caption>";  
+		str+="<caption style='color:blue; margin-bottom:15px;'>Содержание коллекции 'counts' базы данных Mongo 'db_nodejs_ex'</caption>";  
 		str+="<tr>";
 		str+="<th>ID</th>";  
 		str+="<th>IP</th>";
