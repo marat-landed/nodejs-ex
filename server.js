@@ -39,11 +39,11 @@ var db = null,
     dbDetails = new Object();
 
 var initDb = function(callback) {
-  //if (mongoURL == null) return;
-  if (mongoURL == null) {
-	var mongoURL = "mongodb://localhost/db_nodejs_ex";  
-	mongoURLLabel = mongoURL;
-  }	
+  if (mongoURL == null) return;
+  //if (mongoURL == null) {
+	//var mongoURL = "mongodb://localhost/db_nodejs_ex";  
+	//mongoURLLabel = mongoURL;
+  //}	
 
   var mongodb = require('mongodb');
   if (mongodb == null) return;
@@ -78,6 +78,21 @@ app.get('/', function (req, res) {
         console.log('Error running count. Message:\n'+err);
       }
       res.render('index.html', { pageCountMessage : count, dbInfo: dbDetails });
+    });
+  } else {
+    res.render('index.html', { pageCountMessage : null});
+  }
+});
+
+app.get('/remove', function (req, res) {
+  // try to initialize the db on every request if it's not already initialized.
+  if (!db) {
+    initDb(function(err){});
+  }
+  if (db) {
+    var col = db.collection('counts'); // доступ к базе
+    col.remove({},function(err,numberRemoved){
+      res.send("inside remove call back" + numberRemoved);	
     });
   } else {
     res.render('index.html', { pageCountMessage : null});
