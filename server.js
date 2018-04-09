@@ -10,7 +10,7 @@ app.use(morgan('combined'))
 
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
-    mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
+    mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL || 'mongodb://localhost/db_nodejs_ex',
     mongoURLLabel = "";
 
 //console.log("port:",port,"ip:",ip,"mongoURL:",mongoURL,"mongoURLLabel:",mongoURLLabel);
@@ -40,11 +40,7 @@ var db = null,
 
 var initDb = function(callback) {
   if (mongoURL == null) return;
-  //if (mongoURL == null) {
-	//var mongoURL = "mongodb://localhost/db_nodejs_ex";  
-	//mongoURLLabel = mongoURL;
-  //}	
-
+  
   var mongodb = require('mongodb');
   if (mongodb == null) return;
 
@@ -164,7 +160,7 @@ app.get('/pagecount', function (req, res) {
 
 // error handling
 app.use(function(err, req, res, next){
-  console.error(err.stack);
+  console.error("err.stack:",err.stack);
   res.status(500).send('Something bad happened!');
 });
 
