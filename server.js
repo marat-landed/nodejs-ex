@@ -9,9 +9,13 @@ app.engine('html', require('ejs').renderFile);
 app.use(morgan('combined'))
 
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
-    ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
+	//var port = process.env.OPENSHIFT_NODEJS_PORT || 8080,
+    // ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
+	ipaddr = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
     mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
     mongoURLLabel = "";
+
+
 
 //console.log("port:",port,"ip:",ip,"mongoURL:",mongoURL,"mongoURLLabel:",mongoURLLabel);
 //console.log("process.env:",process.env);
@@ -37,6 +41,29 @@ if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
 } else if (mongoURL == null && process.env.DATABASE_SERVICE_NAME == null) {
   mongoURL = 'mongodb://localhost/db_nodejs_ex';
 }
+
+/*
+//mongodb configuration
+var mongoHost = process.env.OPENSHIFT_MONGODB_DB_HOST || 'localhost';
+var mongoPort = process.env.OPENSHIFT_MONGODB_DB_PORT || 27017;
+var mongoUser = ''; //mongodb username
+var mongoPass = ''; //mongodb password
+var mongoDb   = ''; //mongodb database name
+
+//mysql configuration
+var mysqlHost = process.env.OPENSHIFT_MYSQL_DB_HOST || 'localhost';
+var mysqlPort = process.env.OPENSHIFT_MYSQL_DB_PORT || 3306;
+var mysqlUser = ''; //mysql username
+var mysqlPass = ''; //mysql password
+var mysqlDb   = ''; //mysql database name
+
+//connection strings
+var mongoString = 'mongodb://' + mongoUser + ':' + mongoPass + '@' + mongoHost + ':' + mongoPort + '/' + mongoDb;
+var mysqlString = 'mysql://'   + mysqlUser + ':' + mysqlPass + '@' + mysqlHost + ':' + mysqlPort + '/' + mysqlDb;
+
+//connect to mongo
+*/
+
 
 var db = null,
     dbDetails = new Object();
@@ -139,6 +166,7 @@ app.get('/stat', function (req, res) {
 		  str+="</tr>";		
 		})
 		str+="</table>";
+		str+="<p>" + "mongoURL: " + mongoURL + "</p>";  
 		res.send(str);
 	  }); // find	
 	}); // insert 
@@ -172,8 +200,8 @@ initDb(function(err){
   console.log('Error connecting to Mongo. Message:\n'+err);
 });
 
-app.listen(port, ip);
-console.log('Server running on http://%s:%s', ip, port);
+app.listen(port, ipaddr);
+console.log('Server running on http://%s:%s', ipaddr, port);
 
 module.exports = app;
 
