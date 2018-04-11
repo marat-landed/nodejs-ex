@@ -25,7 +25,7 @@ if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
       mongoHost = process.env[mongoServiceName + '_SERVICE_HOST'],
       mongoPort = process.env[mongoServiceName + '_SERVICE_PORT'],
       mongoDatabase = process.env[mongoServiceName + '_DATABASE'],
-      mongoPassword = process.env[mongoServiceName + '_PASSWORD']
+      mongoPassword = process.env[mongoServiceName + '_PASSWORD'],
       mongoUser = process.env[mongoServiceName + '_USER'];
 
   if (mongoHost && mongoPort && mongoDatabase) {
@@ -63,6 +63,14 @@ var mysqlString = 'mysql://'   + mysqlUser + ':' + mysqlPass + '@' + mysqlHost +
 
 //connect to mongo
 */
+
+// 10-04-18 Работает с mongoURL: mongodb://userBYJ:EGJVTNgpHIAYTnCe@172.30.201.170:27017/sampledb
+// mongoURL = 'mongodb://' + mongoUser + ':' + mongoPassword + '@' + mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
+// mongoUser = process.env[mongoServiceName + '_USER'];
+// mongoPassword = process.env[mongoServiceName + '_PASSWORD'];
+// mongoHost = process.env[mongoServiceName + '_SERVICE_HOST'];
+// mongoPort = process.env[mongoServiceName + '_SERVICE_PORT'];
+// mongoDatabase = process.env[mongoServiceName + '_DATABASE'];
 
 
 var db = null,
