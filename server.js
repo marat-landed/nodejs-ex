@@ -176,7 +176,7 @@ app.get('/stat', function (req, res) {
 		  str+="</tr>";		
 		})
 		str+="</table>";
-		str+="<p style='color:green;'>" + "mongoURL: " + mongoURL + "</p>";  
+		str+="<p style='color:green; font-weight: bold; font-style: italic;'>" + "mongoURL: " + mongoURL + "</p>";  
 		res.send(str);
 	  }); // find	
 	}); // insert 
