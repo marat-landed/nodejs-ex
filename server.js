@@ -8,8 +8,10 @@ Object.assign=require('object-assign')
 app.engine('html', require('ejs').renderFile);
 app.use(morgan('combined'))
 
+//var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
 	//var port = process.env.OPENSHIFT_NODEJS_PORT || 8080,
+	//var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
     ipaddr   = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
 	//ipaddr = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
     mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
@@ -210,6 +212,10 @@ initDb(function(err){
 
 app.listen(port, ipaddr);
 console.log('Server running on http://%s:%s', ipaddr, port);
+
+//app.listen(server_port, server_ip_address, function () {
+  //console.log( "Listening on " + server_ip_address + ", server_port " + server_port  );
+//});
 
 module.exports = app;
 
