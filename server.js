@@ -8,10 +8,8 @@ Object.assign=require('object-assign')
 app.engine('html', require('ejs').renderFile);
 app.use(morgan('combined'))
 
-//var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
 	//var port = process.env.OPENSHIFT_NODEJS_PORT || 8080,
-	//var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
     ipaddr   = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
 	//ipaddr = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
     mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
@@ -41,7 +39,7 @@ if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
 
   }
 } else if (mongoURL == null && process.env.DATABASE_SERVICE_NAME == null) {
-  mongoURL = 'mongodb://127.0.0.1:27017/db_nodejs_ex';
+  mongoURL = 'mongodb://localhost/db_nodejs_ex';
 }
 
 /*
@@ -176,7 +174,7 @@ app.get('/stat', function (req, res) {
 		  str+="</tr>";		
 		})
 		str+="</table>";
-		str+="<p style='color:green; font-weight: bold; font-style: italic;'>" + "mongoURL: " + mongoURL + "</p>";  
+		str+="<p>" + "mongoURL: " + mongoURL + "</p>";  
 		res.send(str);
 	  }); // find	
 	}); // insert 
@@ -213,10 +211,6 @@ initDb(function(err){
 app.listen(port, ipaddr);
 console.log('Server running on http://%s:%s', ipaddr, port);
 
-//app.listen(server_port, server_ip_address, function () {
-  //console.log( "Listening on " + server_ip_address + ", server_port " + server_port  );
-//});
-
 module.exports = app;
 
 function timestamp_to_formatdate (unix_timestamp) {
@@ -235,4 +229,4 @@ function timestamp_to_formatdate (unix_timestamp) {
   // Will display time in 10:30:23 format
   var formattedTime = date + "-" + month + "-" + year + " " + hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);	
   return formattedTime;	
-}
+}	
